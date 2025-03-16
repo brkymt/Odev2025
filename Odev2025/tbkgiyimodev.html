@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TBK Giyim</title>
+    <style>
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow-x: hidden;
+            background-color: #ffffff;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0;
+            position: relative;
+            flex: 1;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+        }
+
+       
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+            background-color: #ffffff;
+            border-bottom: 1px solid #f0f0f0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            width: 100%;
+        }
+
+        .menu-btn, .user-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .site-title {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: #000000;
+        }
+
+        
+        .hero-container {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            overflow: hidden;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .promo-box {
+            position: absolute;
+            bottom: 64px;
+            right: 24px;
+            background-color: white;
+            border-radius: 12px;
+            padding: 20px;
+            max-width: 280px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .promo-title {
+            font-weight: 500;
+            font-size: 0.875rem;
+            color: #000000;
+        }
+
+        .promo-subtitle {
+            font-size: 0.875rem;
+            color: #666666;
+            margin-top: 4px;
+        }
+
+        .gender-buttons {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .btn-kadin {
+            padding: 8px 16px;
+            background-color: #e8def8;
+            color: #1d1b20;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: background-color 0.2s;
+        }
+
+        .btn-kadin:hover {
+            background-color: #d9d9d9;
+        }
+
+        .btn-erkek {
+            padding: 8px 16px;
+            background-color: white;
+            color: #1d1b20;
+            border: 1px solid #79747e;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: background-color 0.2s;
+        }
+
+        .btn-erkek:hover {
+            background-color: #f5f5f5;
+        }
+
+       
+        .pagination {
+            position: absolute;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .dot.active {
+            background-color: white;
+        }
+
+        
+        .category-section {
+            padding: 24px;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        @media (max-width: 1200px) {
+            .category-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .category-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .category-grid {
+                grid-template-columns: repeat(1, 1fr);
+            }
+        }
+
+        .category-card {
+            position: relative;
+            height: 300px;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .category-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .category-card:hover .category-image {
+            transform: scale(1.05);
+        }
+
+        .category-title {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 1.25rem;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+            letter-spacing: 1px;
+            z-index: 2;
+        }
+
+        .category-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.5));
+            z-index: 1;
+        }
+
+        .toggle-container {
+            position: absolute;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+        }
+
+        .toggle-buttons {
+            display: flex;
+            overflow: hidden;
+            border-radius: 999px;
+        }
+
+        .btn-koyu {
+            background-color: black;
+            color: white;
+            padding: 4px 16px;
+            font-size: 0.875rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-acik {
+            background-color: white;
+            color: black;
+            padding: 4px 16px;
+            font-size: 0.875rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        
+        .email-btn {
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            background-color: black;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            cursor: pointer;
+            z-index: 10;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s ease;
+        }
+
+        .email-btn:hover {
+            transform: scale(1.1);
+        }
+
+        
+        footer {
+            background-color: #f8f8f8;
+            padding: 24px;
+            text-align: center;
+            font-size: 0.875rem;
+            color: #666;
+            margin-top: 32px;
+        }
+    </style>
+</head>
+<body>
+    
+    <header>
+        <button class="menu-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="4" x2="20" y1="12" y2="12"></line>
+                <line x1="4" x2="20" y1="6" y2="6"></line>
+                <line x1="4" x2="20" y1="18" y2="18"></line>
+            </svg>
+        </button>
+        <h1 class="site-title">TBK Giyim</h1>
+        <button class="user-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <circle cx="12" cy="10" r="3"></circle>
+                <path d="M7 20.662V19c0-1.657 1.343-3 3-3h4c1.657 0 3 1.343 3 3v1.662"></path>
+            </svg>
+        </button>
+    </header>
+
+    <div class="container">
+        
+        <div class="hero-container">
+            <img src="images/pexels-photo-6258910.jpeg" alt="Nike Air Force 1 shoes on wet surface" class="hero-image">
+            
+            
+            <div class="promo-box">
+                <p class="promo-title">%50 Oranında Büyük İndirim</p>
+                <p class="promo-subtitle">Sadece İşaretli Ürünlerde Geçerli</p>
+                
+                <div class="gender-buttons">
+                    <button class="btn-kadin">Kadın</button>
+                    <button class="btn-erkek">Erkek</button>
+                </div>
+            </div>
+
+            
+            <div class="pagination">
+                <div class="dot active"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+        </div>
+
+        
+        <section class="category-section">
+            <div class="category-grid">
+                
+                <div class="category-card">
+                    <div class="category-overlay"></div>
+                    <img src="images/1_org_zoom.webp" alt="Shoes" class="category-image">
+                    <h3 class="category-title">AYAKKABILAR</h3>
+                </div>
+
+                
+                <div class="category-card">
+                    <div class="category-overlay"></div>
+                    <img src="images/sisme-mont-nasil-yikanir.webp" alt="Jackets" class="category-image">
+                    <h3 class="category-title">CEKETLER</h3>
+                </div>
+
+               
+                <div class="category-card">
+                    <div class="category-overlay"></div>
+                    <img src="images/erkek-haki-yesili-bisiklet-yaka-duz-ba-d3d370.webp" alt="T-shirts" class="category-image">
+                    <h3 class="category-title">TİŞÖRTLER</h3>
+                    <div class="toggle-container">
+                        <div class="toggle-buttons">
+                            <button class="btn-koyu">Koyu</button>
+                            <button class="btn-acik">Açık</button>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="category-card">
+                    <div class="category-overlay"></div>
+                    <img src="images/kulah-erkek-buyuk-boy-60cm-siyah-fedor-8-9879.jpg" alt="Accessories" class="category-image">
+                    <h3 class="category-title">AKSESUAR</h3>
+                </div>
+
+                
+                <div class="category-card">
+                    <div class="category-overlay"></div>
+                    <img src="images/stephan-orme-oversize-mavi-sweatshirt-e9-4d4.webp" alt="Sweatshirt" class="category-image">
+                    <h3 class="category-title">SWEATSHIRT</h3>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    
+    <footer>
+        <p>© 2025 TBK Giyim. Tüm hakları saklıdır.</p>
+    </footer>
+
+    
+    <button class="email-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+        </svg>
+    </button>
+</body>
+</html>
